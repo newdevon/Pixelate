@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+	<style>
+		table {
+			border-collapse: collapse;
+			border:1px solid black;
+		}
+
+		td {
+			height:100px;
+			width:100px;
+			border:1px solid black;
+			text-align: center;
+			background-color: lightgrey;
+		}
+
+	</style>
+
+	<script>
+
+		function paint(event) {
+			let x = document.getElementById(event.target.id);
+			x.addEventListener("click", function(event){x.style.backgroundColor="red"});
+		}
+
+	</script>
+
+	<h1> Pixel Grid </h1>
+
+	<table>
+		<tr> <!-- row -->
+			<td id="1,1" onmouseover="paint(event)"></td> <!-- cells within the row -->
+			<td id="1,2" onmouseover="paint(event)"></td>
+		</tr>
+		<tr>
+			<td id="2,1" onmouseover="paint(event)"></td>
+			<td id="2,2" onmouseover="paint(event)"></td>
+		</tr>
+	</table>
+</html>
