@@ -11,7 +11,6 @@
 			width:100px;
 			border:1px solid black;
 			text-align: center;
-			background-color: lightgrey;
 		}
 
 	</style>
@@ -24,13 +23,52 @@
 			x.addEventListener("click", function(event){x.style.backgroundColor=colorPicker});
 		}
 
+		function fillPaint() {
+			let colorPicker = document.getElementById("cw").value;
+			let x = Array.from(document.getElementsByTagName("td")); //can't do table because cells bg color overwrites.
+			//getElementByTagName creates an HTML Collection, an array-like object, but not an array
+			//Array.from changes the HTML Collection into an array
+			x.forEach(function(element){element.style.backgroundColor= colorPicker});
+			//Don't do the for loop below because it might also bring up other properties that you don't want with the HTML Collection
+			// for(let i=0; i<x.length; i++) {
+			// 	x[i].style.backgroundColor = colorPicker;
+			// 	console.log(x);
+			// }
+		}
+
+		function fillUncolored() {
+			let colorPicker = document.getElementById("cw").value;
+			let x = Array.from(document.getElementsByTagName("td"));
+			x.forEach(function(element){
+				if(element.style.backgroundColor === "white") {
+					element.style.backgroundColor= colorPicker;
+				}
+				console.log(element);
+			});
+		}
+
+		function fillWhite() {
+			let x = Array.from(document.getElementsByTagName("td"));
+			x.forEach(function(element){element.style.backgroundColor= "white";});
+		}
+
+		function clickAndHover() {
+			let colorPicker = document.getElementById("cw").value;
+		}
+
 	</script>
 
 	<h1> Pixel Grid </h1>
 
+	<label for="cw">Color Selector</label>
 	<input id="cw" type="color">
 
-	<table>
+	<button onclick="fillPaint()">Fill All</button>
+	<button onclick="fillUncolored()">Fill Uncolored</button>
+	<button onclick="fillWhite()">Clear</button>
+	<button onclick="clickAndHover()">Click and Hold</button>
+
+	<table id="table">
 		<tr> <!-- row -->
 			<td id="1,1" onmouseover="paint(event)"></td> <!-- cells within the row -->
 			<td id="1,2" onmouseover="paint(event)"></td>
