@@ -20,8 +20,8 @@
 
 		function paint(event) {
 			let x = document.getElementById(event.target.id);
-			let y = document.getElementById("cw").value;
-			x.addEventListener("click", function(event){x.style.backgroundColor=y});
+			let colorPicker = document.getElementById("cw").value;
+			x.addEventListener("click", function(event){x.style.backgroundColor=colorPicker});
 		}
 
 	</script>
