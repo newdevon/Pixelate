@@ -20,12 +20,15 @@
 
 		function paint(event) {
 			let x = document.getElementById(event.target.id);
-			x.addEventListener("click", function(event){x.style.backgroundColor="red"});
+			let y = document.getElementById("cw").value;
+			x.addEventListener("click", function(event){x.style.backgroundColor=y});
 		}
 
 	</script>
 
 	<h1> Pixel Grid </h1>
+
+	<input id="cw" type="color">
 
 	<table>
 		<tr> <!-- row -->
