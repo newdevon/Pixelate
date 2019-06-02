@@ -56,8 +56,21 @@
 
 		function clickAndHover(event) {
 			let colorPicker = document.getElementById("cw").value;
-			let x = document.getElementById(event.target.id);
-			x.addEventListener("hover", function(event){x.style.backgroundColor=colorPicker});
+			let myTable = document.getElementById("table");
+			myTable.addEventListener("mousedown", function(event) {
+				//for each row
+				let rows = document.getElementsByTagName("tr");
+				for(let row of rows) {
+					//for each column
+					let cols = row.getElementsByTagName("td");
+					for(let i = 0; i < cols.length; i++) {
+						cols[i].onmouseover=function() {cols[i].style.backgroundColor=colorPicker;}
+					}
+				}
+		});
+			//let x = document.getElementById(event.target.id);
+			//x.addEventListener("mousedown", function(event){x.style.backgroundColor=colorPicker});
+			//x.style.backgroundColor=colorPicker;
 		}
 
 	</script>
@@ -74,12 +87,12 @@
 
 	<table id="table">
 		<tr> <!-- row -->
-			<td id="1,1" onmouseover="paint(event)" onclick="clickAndHover(event)"></td> <!-- cells within the row -->
-			<td id="1,2" onmouseover="paint(event)" onclick="clickAndHover(event)"></td>
+			<td id="1,1" onmouseover="paint(event); clickAndHover(event);"></td> <!-- cells within the row -->
+			<td id="1,2" onmouseover="paint(event); clickAndHover(event);"></td>
 		</tr>
 		<tr>
-			<td id="2,1" onmouseover="paint(event)" onclick="clickAndHover(event)"></td>
-			<td id="2,2" onmouseover="paint(event)" onclick="clickAndHover(event)"></td>
+			<td id="2,1" onmouseover="paint(event); clickAndHover(event);"></td>
+			<td id="2,2" onmouseover="paint(event); clickAndHover(event);"></td>
 		</tr>
 	</table>
 
