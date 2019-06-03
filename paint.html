@@ -1,112 +1,251 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-	<style>
-		table {
-			border-collapse: collapse;
-			border:1px solid black;
-		}
+    
+    <style>
+        h1 {
+            text-align: center;
+            font-size: 38px;
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color:white;
+        }
 
-		td {
-			height:100px;
-			width:100px;
-			border:1px solid black;
-			text-align: center;
-			background-color: "white";
-		}
+        #pixelSelector {
+            text-align: center;
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
 
-	</style>
+        #funcSelector {
+            text-align: center;
+            position: absolute;
+            top: 90%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
 
-	<script>
+        #myTable {
+            text-align: center;
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
 
-		function paint(event) {
-			let x = document.getElementById(event.target.id);
-			let colorPicker = document.getElementById("cw").value;
-			x.addEventListener("click", function(event){x.style.backgroundColor=colorPicker});
-			console.log(colorPicker);
-		}
+        table {
+            border-collapse: collapse;
+            border: solid 1px;
+        }
 
-		function fillPaint() {
-			let colorPicker = document.getElementById("cw").value;
-			let x = Array.from(document.getElementsByTagName("td")); //can't do table because cells bg color overwrites.
-			//getElementByTagName creates an HTML Collection, an array-like object, but not an array
-			//Array.from changes the HTML Collection into an array
-			x.forEach(function(element){element.style.backgroundColor= colorPicker});
-			//Don't do the for loop below because it might also bring up other properties that you don't want with the HTML Collection
-			// for(let i=0; i<x.length; i++) {
-			// 	x[i].style.backgroundColor = colorPicker;
-			// 	console.log(x);
-			// }
-		}
+        td {
+            border: 5px solid black;
+            padding: 15px;
+            border-bottom: :1px solid black;
+        }
 
-		function fillUncolored() {
-			let colorPicker = document.getElementById("cw").value;
-			let x = Array.from(document.getElementsByTagName("td"));
-			x.forEach(function(element){
-				if(element.style.backgroundColor === "white") {
-					element.style.backgroundColor= colorPicker;
-				}
-				console.log(element);
-			});
-		}
+        tr {
+            background: white;
+        }
 
-		function fillWhite() {
-			let x = Array.from(document.getElementsByTagName("td"));
-			x.forEach(function(element){element.style.backgroundColor= "white";});
-		}
+        body{
+            background:black;
+        }
 
-		// function clickAndHover(event) {
-		// 	let colorPicker = document.getElementById("cw").value;
-		// 	let myTable = document.getElementById("table");
-		// 	myTable.addEventListener("mousedown", function(event) {
-		// 		//for each row
-		// 		let rows = document.getElementsByTagName("tr");
-		// 		for(let row of rows) {
-		// 			//for each column
-		// 			let cols = row.getElementsByTagName("td");
-		// 			for(let i = 0; i < cols.length; i++) {
-		// 				cols[i].onmouseover=function() {cols[i].style.backgroundColor=colorPicker;}
-		// 			}
-		// 		}
-		// });
-		// 	//let x = document.getElementById(event.target.id);
-		// 	//x.addEventListener("mousedown", function(event){x.style.backgroundColor=colorPicker});
-		// 	//x.style.backgroundColor=colorPicker;
-		// }
+        p{
+            color: white;
+        }
 
-		// //if mouse id up
-		// document.getElementById("myTable").addEventListener("mouseup", function(event) {
-		//   let rows = document.getElementsByTagName("tr");
-		//   //for each row
-		//   for(let row of rows) {
-		//     //for each column
-		//     let cols = row.getElementsByTagName("td");
-		//     for(let i = 0; i < cols.length; i++) {
-		//       cols[i].onmouseover=function() {}
-		//     }
-		//   }
-		// });
+        button{
+            border-radius: 10px;
+        }
+    </style>
 
-	</script>
 
-	<h1> Pixel Grid </h1>
+    <body>
 
-	<label for="cw">Color Selector</label>
-	<input id="cw" type="color">
+        <title>PIXELATE</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-	<button onclick="fillPaint()">Fill All</button>
-	<button onclick="fillUncolored()">Fill Uncolored</button>
-	<button onclick="fillWhite()">Clear</button>
+        <h1>Pixelate</h1>
 
-	<table id="table">
-		<tr> <!-- row -->
-			<td id="1,1" onmouseover="paint(event); clickAndHover(event);"></td> <!-- cells within the row -->
-			<td id="1,2" onmouseover="paint(event); clickAndHover(event);"></td>
-		</tr>
-		<tr>
-			<td id="2,1" onmouseover="paint(event); clickAndHover(event);"></td>
-			<td id="2,2" onmouseover="paint(event); clickAndHover(event);"></td>
-		</tr>
-	</table>
 
-	<p>Note: Please press "Clear" once before pressing "Fill Uncolored"</p>
+        <div id="pixelSelector">
+            <p> ROWS:
+                <button onclick="addRow()"> + </button>
+                <button onclick="deleteRow()"> - </button>
+            </p>
+
+            <p> COLS:
+                <button onclick="addColumn()"> + </button>
+                <button onclick="deleteColumn()"> - </button>
+            </p>
+
+            <p> COLOR:
+                <select id="selectColor" onchange="changeCurrentColor()">
+                    <option value="WHITE">WHITE</option>
+                    <option value="RED">RED</option>
+                    <option value="GREEN">GREEN</option>
+                    <option value="BLUE">BLUE</option>
+                    <option value="YELLOW">YELLOW</option>
+                </select>
+            </p>
+
+        </div>
+
+
+        <table id="myTable">
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+
+
+        <div id="funcSelector">
+            <button id="fillAllUncolored" onclick="fillAllUncolored()">Fill all uncolored</button>
+            <button id="fillAll" onclick="fillAll()">Fill all</button>
+            <button id="clearAll" onclick="clearAll()">Clear all</button>
+        </div>
+
+    </body>
+
+    <script>
+
+        //initialize currentColor
+        let currentColor = "white";
+
+        //append a new row to the initial cell
+        function addRow() {
+            let tbl = document.getElementById('myTable');
+            let rows = Array.from(document.getElementsByTagName("tr"));
+            console.log(rows);
+
+            //check for border
+            let numRows = tbl.rows.length;
+            //max rows is 12
+            if (numRows < 12) {
+                let newRow = document.createElement("tr");
+                for (let i = 0; i < rows[0].childElementCount; i++) {
+                    newRow.appendChild(document.createElement("td"));
+                    newRow.style.background = currentColor;
+                    console.log(newRow);
+                }
+                tbl.appendChild(newRow);
+            } else {
+                console.log("MAX ROWS");
+            }
+        }
+
+        //remove the last row
+        function deleteRow() {
+            let tbl = document.getElementById('myTable');
+            let numRows = tbl.rows.length;
+            //delete a row if the number of row > 1
+            if (numRows > 1) {
+                document.getElementById("myTable").deleteRow(1);
+            } else {
+                console.log("MIN ROWS");
+            }
+        }
+
+        //add a new cell to each row
+        function addColumn() {
+            //check edge case
+            let tbl = document.getElementById('myTable');
+            let rows = tbl.rows;
+
+            if (rows[0].childElementCount < 15) {
+                let rows = document.getElementsByTagName('tr');
+                //for each row
+                for (let row of rows) {
+                    //create a newCol
+                    let newCol = document.createElement("td");
+                    row.appendChild(newCol);
+                }
+            } else {
+                console.log("MAX COLS");
+            }
+        }
+
+        function deleteColumn() {
+            //check edge case
+            let tbl = document.getElementById('myTable');
+            let rows = tbl.rows;
+
+            if (rows[0].childElementCount > 1) {
+                let rows = document.getElementsByTagName('tr');
+                //for each row
+                for (let row of rows) {
+                    row.deleteCell(-1);
+                }
+            } else {
+                console.log("MIN COLS");
+            }
+        }
+
+        //eventListener for myTable for click to change color
+        //if hovering over the table
+        document.getElementById("myTable").addEventListener("mouseover", function(event) {
+            let rows = document.getElementsByTagName("tr");
+            //for each row
+            for (let row of rows) {
+                //for each column
+                let cols = row.getElementsByTagName("td");
+                for (let i = 0; i < cols.length; i++) {
+                    cols[i].onclick = function() {
+                        cols[i].style.background = currentColor;
+                    }
+                }
+            }
+        });
+
+        //eventListener for myTable for mouseup and mousedown (click and drag)
+        //if mouse is down
+        document.getElementById("myTable").addEventListener("mousedown", function(event) {
+            let rows = document.getElementsByTagName("tr");
+            //for each row
+            for (let row of rows) {
+                //for each column
+                let cols = row.getElementsByTagName("td");
+                for (let i = 0; i < cols.length; i++) {
+                    cols[i].onmouseover = function() {
+                        cols[i].style.background = currentColor;
+                    }
+                }
+            }
+        });
+
+        //if mouse is up
+        document.getElementById("myTable").addEventListener("mouseup", function(event) {
+            let rows = document.getElementsByTagName("tr");
+            //for each row
+            for (let row of rows) {
+                //for each column
+                let cols = row.getElementsByTagName("td");
+                for (let i = 0; i < cols.length; i++) {
+                    cols[i].onmouseover = function() {}
+                }
+            }
+        });
+
+        //change currentColor when a different color is selected using colorSelector
+        function changeCurrentColor() {
+            if (document.getElementById("selectColor").value === "WHITE") {
+                currentColor = "white";
+            } else if (document.getElementById("selectColor").value === "RED") {
+                currentColor = "red";
+            } else if (document.getElementById("selectColor").value === "BLUE") {
+                currentColor = "blue";
+            } else if (document.getElementById("selectColor").value === "GREEN") {
+                currentColor = "green";
+            } else if (document.getElementById("selectColor").value === "YELLOW") {
+                currentColor = "yellow";
+            }
+        }
+        
+    </script>
+
 </html>
