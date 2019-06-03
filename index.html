@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <title>Pixelate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="table.css">
+
+    <h1>Pixelate</h1>
+
+
+    <div id="pixelSelector">
+        <p> ROWS:
+            <button onclick="addRow()"> + </button>
+            <button onclick="deleteRow()"> - </button>
+        </p>
+
+        <p> COLS:
+            <button onclick="addColumn()"> + </button>
+            <button onclick="deleteColumn()"> - </button>
+        </p>
+
+        <p> COLOR:
+            <select id="selectColor" onchange="changeCurrentColor()">
+                <option value="WHITE">White</option>
+                <option value="RED">Red</option>
+                <option value="GREEN">Green</option>
+                <option value="BLUE">Blue</option>
+                <option value="YELLOW">Yellow</option>
+            </select>
+        </p>
+
+    </div>
+
+     <div id="funcSelector">
+        <button id="fillAllUncolored" onclick="fillAllUncolored()">Fill all uncolored</button>
+        <button id="fillAll" onclick="fillAll()">Fill all</button>
+        <button id="clearAll" onclick="clearAll()">Clear all</button>
+    </div>
+
+
+    <table id="myTable">
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
+
+    <script src="paintAndCreate.js"></script>
+
+</body>
+
+</html>
